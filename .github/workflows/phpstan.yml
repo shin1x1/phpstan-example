@@ -4,7 +4,7 @@ on:
   push:
 
 jobs:
-  phpstan:
+  laravel:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -17,3 +17,10 @@ jobs:
       run: cd laravel && composer install --no-progress --prefer-dist --optimize-autoloader
     - name: Run phpstan in laravel
       run: cd laravel && ./vendor/bin/phpstan --memory-limit=1G analyse
+
+  vanilla:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Run phpstan in laravel
+        run: cd vanilla && docker run -v `pwd`:/app -w /app ghcr.io/phpstan/phpstan analyse
