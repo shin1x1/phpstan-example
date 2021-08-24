@@ -1,0 +1,22 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to an undefined static method Foo\\:\\:sub\\(\\)\\.$#"
+			count: 1
+			path: index.php
+
+		-
+			message: "#^Class Foo referenced with incorrect case\\: foo\\.$#"
+			count: 1
+			path: index.php
+
+		-
+			message: "#^Instantiated class Bar not found\\.$#"
+			count: 1
+			path: index.php
+
+		-
+			message: "#^Static call to instance method Foo\\:\\:add\\(\\)\\.$#"
+			count: 1
+			path: index.php
+
