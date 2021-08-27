@@ -2,6 +2,7 @@ name: phpstan
 
 on:
   push:
+  pull_request:
 
 jobs:
   laravel:
