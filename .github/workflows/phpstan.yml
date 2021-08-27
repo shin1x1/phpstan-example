@@ -1,7 +1,7 @@
 name: phpstan
 
 on:
-  pull_request:
+  push:
 
 jobs:
   laravel:
@@ -12,15 +12,15 @@ jobs:
       uses: shivammathur/setup-php@v2
       with:
         php-version: '8.0'
-        tools: composer:v2, cs2pr
+        tools: composer:v2
     - name: Resolve dependencies in laravel
       run: cd laravel && composer install --no-progress --prefer-dist --optimize-autoloader
     - name: Run phpstan in laravel
-      run: cd laravel && ./vendor/bin/phpstan --memory-limit=1G analyse --error-format=checkstyle | sed -e 's/<file name="/<file name="laravel\//' | cs2pr
+      run: cd laravel && ./vendor/bin/phpstan --memory-limit=1G analyse --error-format=github | sed -e 's/ file=/ file=laravel\//'
 
   vanilla:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
       - name: Run phpstan in laravel
-        run: cd vanilla && docker run -v `pwd`:/app -w /app ghcr.io/phpstan/phpstan analyse
+        run: cd vanilla && docker run -v `pwd`:/app -w /app ghcr.io/phpstan/phpstan analyse --error-format=github | sed -e 's/ file=/ file=vanilla\//'
