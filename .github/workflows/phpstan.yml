@@ -1,7 +1,6 @@
 name: phpstan
 
 on:
-  push:
   pull_request:
 
 jobs:
@@ -17,7 +16,7 @@ jobs:
     - name: Resolve dependencies in laravel
       run: cd laravel && composer install --no-progress --prefer-dist --optimize-autoloader
     - name: Run phpstan in laravel
-      run: cd laravel && ./vendor/bin/phpstan --memory-limit=1G analyse --error-format=checkstyle | cs2pr
+      run: cd laravel && ./vendor/bin/phpstan --memory-limit=1G analyse --error-format=checkstyle | sed -e 's/<file name="/<file name="laravel\//' | cs2pr
 
   vanilla:
     runs-on: ubuntu-latest
